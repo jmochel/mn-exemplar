@@ -21,18 +21,6 @@
     <exec.mainClass>org.saltations.mre.app.MNRestExemplarApp</exec.mainClass>
   </properties>
 
-  <!-- <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>io.micronaut.platform</groupId>
-        <artifactId>micronaut-platform</artifactId>
-        <version>${micronaut.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement> -->
-
   <dependencies>
     <!-- Jakarta Specs -->
     <dependency>
