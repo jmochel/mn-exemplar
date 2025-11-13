@@ -4,22 +4,95 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.saltations.exemplar</groupId>
   <artifactId>cli-exemplar</artifactId>
-  <packaging>${packaging}</packaging>
+  <packaging>jar</packaging>
+
+  <!-- https://repo1.maven.org/maven2/io/micronaut/platform/micronaut-parent/4.10.1/micronaut-parent-4.10.1.pom -->
 
   <parent>
-    <groupId>org.saltations.exemplar</groupId>
-    <artifactId>exemplar-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
+    <groupId>io.micronaut.platform</groupId>
+    <artifactId>micronaut-parent</artifactId>
+    <version>4.10.1</version>
+    <!-- Empty relativePath disables searching for a parent pom.xml in ancestor directories -->
+    <relativePath/>
   </parent>
   
+  <scm>
+    <connection>scm:git:https://github.com/jmochel/endeavour.git</connection>
+    <developerConnection>scm:git:https://github.com/jmochel/endeavour.git</developerConnection>
+    <url>https://github.com/jmochel/endeavour</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>jmochel</id>  
+      <name>Jim Mochel</name>
+      <email>jim.mochel@gmail.com</email>
+    </developer>
+  </developers>
+
   <properties>
-    <packaging>jar</packaging>
+    <!-- Java -->
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Dependency Versions of dependencies not already defined in the parent pom.xml or parent bom -->
+    <endeavour.version>0.3.0</endeavour.version>
+
+    <!-- Maven Plugins -->
+    <maven-jacoco-plugin.version>0.8.12</maven-jacoco-plugin.version>
+    <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
+    <maven-versions-plugin.version>2.17.1</maven-versions-plugin.version>
+
+    <!-- Module-specific -->
     <exec.mainClass>org.saltations.mn4.Mn4CliExemplarCommand</exec.mainClass>
   </properties>
 
+  <repositories>
+    <repository>
+      <id>central</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages - jmochel/endeavour</name>
+      <url>https://maven.pkg.github.com/jmochel/endeavour</url>
+    </repository>
+  </repositories>
+
+  <!-- Managed dependency declarations for dependencies not already managed in the parent pom.xml or parent bom -->
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.saltations.endeavour</groupId>
+        <artifactId>endeavour</artifactId>
+        <version>${endeavour.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+
+  <!-- Dependency usages -->
 
   <dependencies>
+
+    <!-- Infrastructure dependency usages -->
+  
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  
+    <!-- Framework and specification dependencies -->
+
     <dependency>
       <groupId>io.micronaut.picocli</groupId>
       <artifactId>micronaut-picocli</artifactId>
@@ -46,25 +119,13 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-client-jdk</artifactId>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>io.micronaut.test</groupId>
-      <artifactId>micronaut-test-junit5</artifactId>
-      <scope>test</scope>
-    </dependency>
+
+    <!-- Test dependencies -->
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -76,17 +137,66 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-junit-jupiter</artifactId>
-      <scope>test</scope>
+      <groupId>org.saltations.endeavour</groupId>
+      <artifactId>endeavour</artifactId>
     </dependency>
   </dependencies>
   <build>
+
+    <!-- 
+      Managed Plugin Declarations
+      
+      Used to manage all plugins that are used in the project.
+      This allows for the plugins to be used in the project without having to specify the version in each pom.xml file and this child module can more 
+      easily be added in under another parent pom.xml file.
+    -->
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>${maven-jacoco-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>report</id>
+              <phase>test</phase>
+              <goals>
+                <goal>report</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <!-- Release -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>${maven-release-plugin.version}</version>
+          <configuration>
+            <tagNameFormat>v@{project.version}</tagNameFormat>
+            <releaseProfiles>release</releaseProfiles>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            <preparationGoals>clean verify</preparationGoals>
+            <arguments>-DskipTests=false -B -ntp</arguments>
+            <pushChanges>true</pushChanges>
+            <scmCommentPrefix>[release]</scmCommentPrefix>
+          </configuration>
+        </plugin>
+        <!-- Optional: bump deps before release -->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>${maven-versions-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <!-- Plugin Bindings -->
     <plugins>
       <plugin>
         <groupId>io.micronaut.maven</groupId>
@@ -94,47 +204,28 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.5.0</version>
-        <executions>
-          <execution>
-            <id>micronaut-enforce</id>
-            <phase>none</phase>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <!-- Uncomment to enable incremental compilation -->
-          <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
-
           <annotationProcessorPaths combine.self="override">
             <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version>
             </path>
             <path>
               <groupId>io.micronaut</groupId>
               <artifactId>micronaut-inject-java</artifactId>
-              <version>${micronaut.core.version}</version>
             </path>
             <path>
               <groupId>info.picocli</groupId>
               <artifactId>picocli-codegen</artifactId>
-              <version>${picocli.version}</version>
             </path>
             <path>
               <groupId>io.micronaut</groupId>
               <artifactId>micronaut-graal</artifactId>
-              <version>${micronaut.core.version}</version>
             </path>
             <path>
               <groupId>io.micronaut.serde</groupId>
               <artifactId>micronaut-serde-processor</artifactId>
-              <version>${micronaut.serialization.version}</version>
               <exclusions>
                 <exclusion>
                   <groupId>io.micronaut</groupId>
@@ -145,7 +236,6 @@
             <path>
               <groupId>io.micronaut.validation</groupId>
               <artifactId>micronaut-validation-processor</artifactId>
-              <version>${micronaut.validation.version}</version>
               <exclusions>
                 <exclusion>
                   <groupId>io.micronaut</groupId>
@@ -163,23 +253,29 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.11</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
+
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/jmochel/endeavour</url>
+    </repository>
+    <snapshotRepository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/jmochel/endeavour</url>
+    </snapshotRepository>
+  </distributionManagement>
 
 </project>

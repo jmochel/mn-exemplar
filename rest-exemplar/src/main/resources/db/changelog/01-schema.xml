@@ -34,8 +34,8 @@
             </not>
         </preConditions>
         <createTable tableName="place">
-            <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()" remarks="Id of the place">
-                <constraints  primaryKey="true" unique="true" nullable="false" primaryKeyName="pk_place"/>
+            <column name="id" type="int" remarks="Id of the place" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_place"/>
             </column>
             <column name="name" type="varchar(50)" remarks="Name of the place">
                 <constraints nullable="false"/>
