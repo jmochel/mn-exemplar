@@ -154,20 +154,29 @@
   <!-- Dependency usages -->
   
   <dependencies>
-    <!-- Jakarta Specs -->
+
+    <!-- Infrastructure dependency usages -->
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+    </dependency>
+
+    <!-- Framework and specification dependencies -->
+
     <dependency>
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.persistence</groupId>
-      <artifactId>jakarta.persistence-api</artifactId>
-    </dependency>
-
-    <!-- Micronaut Core -->
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-http-client</artifactId>
     </dependency>
     <dependency>
       <groupId>io.micronaut</groupId>
@@ -177,58 +186,41 @@
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-management</artifactId>
     </dependency>
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-retry</artifactId>
-    </dependency>
-    
-    <!-- Micronaut Data -->
+
     <dependency>
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-jdbc</artifactId>
     </dependency>
     
-    <!-- Micronaut SQL -->
     <dependency>
       <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-jdbc-hikari</artifactId>
     </dependency>
     
-    <!-- Micronaut Liquibase -->
     <dependency>
       <groupId>io.micronaut.liquibase</groupId>
       <artifactId>micronaut-liquibase</artifactId>
     </dependency>
     
-    <!-- Micronaut Problem -->
     <dependency>
       <groupId>io.micronaut.problem</groupId>
       <artifactId>micronaut-problem-json</artifactId>
     </dependency>
     
-    <!-- Micronaut Reactor -->
     <dependency>
       <groupId>io.micronaut.reactor</groupId>
       <artifactId>micronaut-reactor</artifactId>
     </dependency>
-    <dependency>
-      <groupId>io.micronaut.reactor</groupId>
-      <artifactId>micronaut-reactor-http-client</artifactId>
-    </dependency>
     
-    <!-- Micronaut Serde -->
     <dependency>
       <groupId>io.micronaut.serde</groupId>
       <artifactId>micronaut-serde-jackson</artifactId>
     </dependency>
-    
-    <!-- Micronaut Validation -->
     <dependency>
       <groupId>io.micronaut.validation</groupId>
       <artifactId>micronaut-validation</artifactId>
     </dependency>
-    
-    <!-- OpenAPI -->
+  
     <dependency>
       <groupId>io.micronaut.openapi</groupId>
       <artifactId>micronaut-openapi-annotations</artifactId>
@@ -256,31 +248,11 @@
       <artifactId>jackson-datatype-jsr310</artifactId>
     </dependency>
 
-    <!-- Logging -->
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
     <!-- YAML -->
     <dependency>
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
       <scope>runtime</scope>
-    </dependency>
-
-    <!-- Lombok -->
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- MapStruct -->
-    <dependency>
-      <groupId>org.mapstruct</groupId>
-      <artifactId>mapstruct</artifactId>
     </dependency>
 
     <!-- General Libraries -->
@@ -302,6 +274,7 @@
     </dependency>
     
     <!-- Test Dependencies -->
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>

@@ -37,11 +37,10 @@
     <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <!-- Version of dependencies not already defined in the parent pom.xml or parent bom -->
+    <!-- Dependency Versions of dependencies not already defined in the parent pom.xml or parent bom -->
     <endeavour.version>0.3.0</endeavour.version>
-    <mockito.version>5.14.2</mockito.version>
 
-    <!-- Plugins -->
+    <!-- Maven Plugins -->
     <maven-jacoco-plugin.version>0.8.12</maven-jacoco-plugin.version>
     <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
     <maven-versions-plugin.version>2.17.1</maven-versions-plugin.version>
@@ -71,22 +70,29 @@
         <artifactId>endeavour</artifactId>
         <version>${endeavour.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId>
-        <version>${mockito.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-junit-jupiter</artifactId>
-        <version>${mockito.version}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 
+
   <!-- Dependency usages -->
-  
+
   <dependencies>
+
+    <!-- Infrastructure dependency usages -->
+  
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  
+    <!-- Framework and specification dependencies -->
+
     <dependency>
       <groupId>io.micronaut.picocli</groupId>
       <artifactId>micronaut-picocli</artifactId>
@@ -113,25 +119,13 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-client-jdk</artifactId>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>io.micronaut.test</groupId>
-      <artifactId>micronaut-test-junit5</artifactId>
-      <scope>test</scope>
-    </dependency>
+
+    <!-- Test dependencies -->
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -140,16 +134,6 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
