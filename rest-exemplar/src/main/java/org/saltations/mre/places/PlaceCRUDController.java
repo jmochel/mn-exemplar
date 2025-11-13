@@ -1,7 +1,5 @@
 package org.saltations.mre.places;
 
-import java.util.UUID;
-
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.validation.validator.Validator;
@@ -24,7 +22,7 @@ import org.saltations.mre.domain.PlaceMapper;
 @StdController
 @Controller(value = "/places", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 @Tag(name="Places", description = "Place info")
-public class PlaceCRUDController extends RestCrudEntityControllerFoundation<UUID, Place, PlaceCore, PlaceEntity, PlaceRepo, PlaceMapper, PlaceCRUDService>
+public class PlaceCRUDController extends RestCrudEntityControllerFoundation<Long, Place, PlaceCore, PlaceEntity, PlaceRepo, PlaceMapper, PlaceCRUDService>
 {
     @Inject
     public PlaceCRUDController(RouteBuilder.UriNamingStrategy uriNaming, PlaceCRUDService entityService, PlaceRepo entityRepo, PlaceMapper entityMapper, Validator validator)
