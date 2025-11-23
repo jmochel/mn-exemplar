@@ -1,8 +1,6 @@
 package org.saltations.mre.domain;
 
 import java.time.OffsetDateTime;
-import java.util.UUID;
-
 import io.micronaut.data.annotation.AutoPopulated;
 import io.micronaut.data.annotation.DateCreated;
 import io.micronaut.data.annotation.DateUpdated;
@@ -32,11 +30,11 @@ import org.saltations.mre.common.domain.Entity;
 @MappedEntity("place")
 @Serdeable(naming = SnakeCaseStrategy.class)
 @SuperBuilder(builderMethodName = "of", buildMethodName = "done", toBuilder = true)
-public class PlaceEntity extends PlaceCore implements Entity<UUID>
+public class PlaceEntity extends PlaceCore implements Entity<Long>
 {
     @Id
     @AutoPopulated
-    private UUID id;
+    private Long id;
 
     @DateCreated
     private OffsetDateTime created;

@@ -1,7 +1,5 @@
 package org.saltations.mre.domain.places;
 
-import java.util.UUID;
-
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.saltations.mre.domain.PlaceMapper;
@@ -18,7 +16,6 @@ import org.saltations.mre.fixtures.EntityOracleBase;
 @Singleton
 public class PlaceOracle extends EntityOracleBase<Place, PlaceCore, PlaceEntity>
 {
-    private static final long UUID_MOST_SIGNIFICANT_LONG = 0xffff_ffff_ffff_ffffL;
     private final PlaceMapper mapper;
 
     @Inject
@@ -50,7 +47,7 @@ public class PlaceOracle extends EntityOracleBase<Place, PlaceCore, PlaceEntity>
         var core = coreExemplar(initialSharedValue, offset);
         var entity = mapper.createEntity(core);
 
-        entity.setId(new UUID(UUID_MOST_SIGNIFICANT_LONG, currIndex));
+        entity.setId(currIndex);
 
         return entity;
     }

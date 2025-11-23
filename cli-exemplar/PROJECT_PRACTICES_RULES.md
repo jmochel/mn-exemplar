@@ -23,7 +23,7 @@ This document outlines the project practices and conventions used in the mn4-cli
 ```
 
 ### 1.2 Java Version Configuration
-- **Target Java 21**: Use Java 21 as the target version for modern CLI applications
+- **Target Java 25**: Use Java 25 as the target version for modern CLI applications
 - **Consistent Version Properties**: Define `jdk.version`, `source.version`, and `release.version` consistently
 
 ```xml

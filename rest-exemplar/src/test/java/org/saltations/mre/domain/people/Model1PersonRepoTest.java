@@ -2,6 +2,7 @@ package org.saltations.mre.domain.people;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 import io.micronaut.data.runtime.criteria.RuntimeCriteriaBuilder;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -116,7 +117,8 @@ class Model1PersonRepoTest
 
         var ids = saved.stream().map(e -> e.getId()).collect(Collectors.toList());
 
-        var retrieved = repo.findAllById(ids);
+        var retrieved = StreamSupport.stream(repo.findAllById(ids).spliterator(), false)
+                                     .collect(Collectors.toList());
         assertEquals(ids.size(), retrieved.size(), "Retrieved the expected amount");
 
         IntStream.range(0,20).forEach(i -> oracle.hasSameCoreContent(saved.get(i), retrieved.get(i)));

@@ -136,12 +136,12 @@ public class RestCrudEntityControllerFoundation<ID,IC,
             description = "Malformed request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.",
             content = @Content(mediaType = MediaType.APPLICATION_JSON_PROBLEM, schema = @Schema(allOf = ProblemSchema.class))
     )
-    public Mono<MutableHttpResponse<E>> create(@NotNull @Valid @Body final C toBeCreated) throws ThrowableProblem
+    public Mono<MutableHttpResponse<E>> create(@NotNull @Valid @Body final C toBeCreated) throws Exception
     {
         // Part of the service contract is to return only and outcome , so no exceptions are thrown
         var result = entityService.create(toBeCreated);
 
-        result.ifFailure(failure -> log.error("Failure: {}", failure));
+        result.ifFailure(this::logAndThrowFailure);
 
         return Mono.just(created((E) result.get()));
     }
