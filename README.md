@@ -1,9 +1,6 @@
 # Intention
 
-Exemplar application demonstrating my preferred practices for commandline applications using micronaut
-
-
-
+Exemplar applications experimenting with AI coding and some coding practices in Micronaut
 
 
 

@@ -21,7 +21,7 @@ applies_to:
 ---
 
 ## 1) Picking the Right Kind of Type
-- Use **records** for pure data carriers with value semantics (all fields part of state). Add validation in canonical ctor or a static factory.
+- Use **records** for pure data carriers with value semantics (all fields part of state). Add validation in canonical constructor or in a static factory.
 - Use **final classes** for rich behavior/value types that need invariants beyond records.
 - Use **interfaces** for capabilities/ports. Prefer **single-responsibility** interfaces; avoid “fat” kitchen-sink contracts.
 - Use **sealed hierarchies** (Java 17+) for closed polymorphism; list permitted types explicitly.
